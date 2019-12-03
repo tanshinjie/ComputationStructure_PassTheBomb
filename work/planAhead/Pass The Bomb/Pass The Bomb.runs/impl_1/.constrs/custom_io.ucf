@@ -1,0 +1,123 @@
+NET "startSignal" LOC = P2;
+NET "startSignal" IOSTANDARD = LVTTL;
+NET "startLED" LOC = P1;
+NET "startLED" IOSTANDARD = LVTTL;
+NET "tickingLED" LOC = P23;
+NET "tickingLED" IOSTANDARD = LVTTL;
+
+NET "p1led" LOC = P50;
+NET "p1led" IOSTANDARD = LVTTL;
+NET "p1left" LOC = P51;
+NET "p1left" IOSTANDARD = LVTTL;
+NET "p1opp" LOC = P41;
+NET "p1opp" IOSTANDARD = LVTTL;
+NET "p1right" LOC = P35;
+NET "p1right" IOSTANDARD = LVTTL;
+
+NET "p2led" LOC = P29;
+NET "p2led" IOSTANDARD = LVTTL;
+NET "p2left" LOC = P33;
+NET "p2left" IOSTANDARD = LVTTL;
+NET "p2opp" LOC = P30;
+NET "p2opp" IOSTANDARD = LVTTL;
+NET "p2right" LOC = P27;
+NET "p2right" IOSTANDARD = LVTTL;
+
+NET "p3led" LOC = P7;
+NET "p3led" IOSTANDARD = LVTTL;
+NET "p3left" LOC = P10;
+NET "p3left" IOSTANDARD = LVTTL;
+NET "p3opp" LOC = P8;
+NET "p3opp" IOSTANDARD = LVTTL;
+NET "p3right" LOC = P6;
+NET "p3right" IOSTANDARD = LVTTL;
+
+NET "p4led" LOC = P137;
+NET "p4led" IOSTANDARD = LVTTL;
+NET "p4left" LOC = P142;
+NET "p4left" IOSTANDARD = LVTTL;
+NET "p4opp" LOC = P140;
+NET "p4opp" IOSTANDARD = LVTTL;
+NET "p4right" LOC = P138;
+NET "p4right" IOSTANDARD = LVTTL;
+
+
+NET "io_seg_p1[0]" LOC = P58;
+NET "io_seg_p1[0]" IOSTANDARD = LVTTL;
+NET "io_seg_p1[1]" LOC = P57;
+NET "io_seg_p1[1]" IOSTANDARD = LVTTL;
+NET "io_seg_p1[2]" LOC = P67;
+NET "io_seg_p1[2]" IOSTANDARD = LVTTL;
+NET "io_seg_p1[3]" LOC = P66;
+NET "io_seg_p1[3]" IOSTANDARD = LVTTL;
+NET "io_seg_p1[4]" LOC = P75;
+NET "io_seg_p1[4]" IOSTANDARD = LVTTL;
+NET "io_seg_p1[5]" LOC = P74;
+NET "io_seg_p1[5]" IOSTANDARD = LVTTL;
+NET "io_seg_p1[6]" LOC = P78;
+NET "io_seg_p1[6]" IOSTANDARD = LVTTL;
+
+NET "io_sel_p1[0]" LOC = P80;
+NET "io_sel_p1[0]" IOSTANDARD = LVTTL;
+NET "io_sel_p1[1]" LOC = P81;
+NET "io_sel_p1[1]" IOSTANDARD = LVTTL;
+
+NET "io_seg_p2[0]" LOC = P85;
+NET "io_seg_p2[0]" IOSTANDARD = LVTTL;
+NET "io_seg_p2[1]" LOC = P84;
+NET "io_seg_p2[1]" IOSTANDARD = LVTTL;
+NET "io_seg_p2[2]" LOC = P88;
+NET "io_seg_p2[2]" IOSTANDARD = LVTTL;
+NET "io_seg_p2[3]" LOC = P87;
+NET "io_seg_p2[3]" IOSTANDARD = LVTTL;
+NET "io_seg_p2[4]" LOC = P93;
+NET "io_seg_p2[4]" IOSTANDARD = LVTTL;
+NET "io_seg_p2[5]" LOC = P92;
+NET "io_seg_p2[5]" IOSTANDARD = LVTTL;
+NET "io_seg_p2[6]" LOC = P94;
+NET "io_seg_p2[6]" IOSTANDARD = LVTTL;
+
+NET "io_sel_p2[0]" LOC = P97;
+NET "io_sel_p2[0]" IOSTANDARD = LVTTL;
+NET "io_sel_p2[1]" LOC = P98;
+NET "io_sel_p2[1]" IOSTANDARD = LVTTL;
+
+NET "io_seg_p3[0]" LOC = P105;
+NET "io_seg_p3[0]" IOSTANDARD = LVTTL;
+NET "io_seg_p3[1]" LOC = P104;
+NET "io_seg_p3[1]" IOSTANDARD = LVTTL;
+NET "io_seg_p3[2]" LOC = P112;
+NET "io_seg_p3[2]" IOSTANDARD = LVTTL;
+NET "io_seg_p3[3]" LOC = P111;
+NET "io_seg_p3[3]" IOSTANDARD = LVTTL;
+NET "io_seg_p3[4]" LOC = P115;
+NET "io_seg_p3[4]" IOSTANDARD = LVTTL;
+NET "io_seg_p3[5]" LOC = P114;
+NET "io_seg_p3[5]" IOSTANDARD = LVTTL;
+NET "io_seg_p3[6]" LOC = P116;
+NET "io_seg_p3[6]" IOSTANDARD = LVTTL;
+
+NET "io_sel_p3[0]" LOC = P118;
+NET "io_sel_p3[0]" IOSTANDARD = LVTTL;
+NET "io_sel_p3[1]" LOC = P119;
+NET "io_sel_p3[1]" IOSTANDARD = LVTTL;
+
+NET "io_seg_p4[0]" LOC = P22;
+NET "io_seg_p4[0]" IOSTANDARD = LVTTL;
+NET "io_seg_p4[1]" LOC = P21;
+NET "io_seg_p4[1]" IOSTANDARD = LVTTL;
+NET "io_seg_p4[2]" LOC = P17;
+NET "io_seg_p4[2]" IOSTANDARD = LVTTL;
+NET "io_seg_p4[3]" LOC = P16;
+NET "io_seg_p4[3]" IOSTANDARD = LVTTL;
+NET "io_seg_p4[4]" LOC = P15;
+NET "io_seg_p4[4]" IOSTANDARD = LVTTL;
+NET "io_seg_p4[5]" LOC = P14;
+NET "io_seg_p4[5]" IOSTANDARD = LVTTL;
+NET "io_seg_p4[6]" LOC = P11;
+NET "io_seg_p4[6]" IOSTANDARD = LVTTL;
+
+NET "io_sel_p4[0]" LOC = P143;
+NET "io_sel_p4[0]" IOSTANDARD = LVTTL;
+NET "io_sel_p4[1]" LOC = P144;
+NET "io_sel_p4[1]" IOSTANDARD = LVTTL;

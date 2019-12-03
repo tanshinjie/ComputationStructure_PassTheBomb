@@ -1,0 +1,94 @@
+module get_winner (
+    input clk,  // clock
+    input rst,  // reset
+    input score_1[5],
+    input score_2[5],
+    input score_3[5],
+    input aluMuxIn[3],
+    output winnerIs[2],
+    output foundWinner,
+    output draw[1]
+  ) {
+  
+  .clk(clk),.rst(rst) {
+    fsm states(#INIT(FINDWINNER)) = {FINDWINNER,FOUDNWINNER,DRAW};
+    dff highest[5](#INIT(0));
+    dff winnerCode[2](#INIT(0));
+  }
+  
+  alu16 myALU;
+  sig drawSig;
+  always {
+    draw = 0;
+    winnerIs = 0;
+    myALU.a = 0;
+    myALU.b = 0;
+    myALU.alufn = 111111;
+    foundWinner = b0;
+    case(states.q){
+      states.FINDWINNER:
+        case(aluMuxIn) {
+          3b000:
+            myALU.alufn = b110101;
+            myALU.a = score_1;
+            myALU.b = highest.q;
+            if (myALU.op[0] == b0) {
+              highest.d = score_1;
+            }
+          3b001:
+            myALU.alufn = b110101;
+            myALU.a = score_2;
+            myALU.b = highest.q;
+            if (myALU.op[0] == b0) {
+              highest.d = score_2;
+            }
+          3b010:
+            myALU.alufn = b110101;
+            myALU.a = score_3;
+            myALU.b = highest.q;
+            if (myALU.op[0] == b0) {
+              highest.d = score_3;
+            }
+          3b011:
+            drawSig = (highest.q == score_1 & highest.q == score_2) | (highest.q == score_1 & highest.q == score_3) | (highest.q == score_2 & highest.q == score_3);
+            if (drawSig == b1) {
+              states.d = states.DRAW;
+            }
+          3b100:
+            myALU.alufn = b110011;
+            myALU.a = score_1;
+            myALU.b = highest.q;
+            if (myALU.op[0] == b1) {
+              states.d = states.FOUDNWINNER;
+              winnerCode.d = b01;
+            }
+          3b101:
+            myALU.alufn = b110011;
+            myALU.a = score_2;
+            myALU.b = highest.q;
+            if (myALU.op[0] == b1) {
+              states.d = states.FOUDNWINNER;
+              winnerCode.d = b10;
+            }
+          3b110:
+            myALU.alufn = b110011;
+            myALU.a = score_3;
+            myALU.b = highest.q;
+            if (myALU.op[0] == b1) {
+              states.d = states.FOUDNWINNER;
+              winnerCode.d = b11;
+            }
+          
+        }
+      states.FOUDNWINNER:
+        myALU.alufn = b000000;
+        myALU.a = 00;
+        myALU.b = winnerCode.q;
+        winnerIs = myALU.op[1:0];
+        foundWinner = b1;
+      
+      states.DRAW:
+        draw = b1;
+    }
+  }
+}

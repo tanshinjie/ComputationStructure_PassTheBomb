@@ -1,0 +1,133 @@
+// Pass The Bomb final version
+module mojo_top (
+    input clk,              // 50MHz clock
+    input rst_n,            // reset button (active low)
+    output led [8],         // 8 user controllable LEDs
+    input cclk,             // configuration clock, AVR ready when high
+    output spi_miso,        // AVR SPI MISO
+    input spi_ss,           // AVR SPI Slave Select
+    input spi_mosi,         // AVR SPI MOSI
+    input spi_sck,          // AVR SPI Clock
+    output spi_channel [4], // AVR general purpose pins (used by default to select ADC channel)
+    input avr_tx,           // AVR TX (FPGA RX)
+    output avr_rx,          // AVR RX (FPGA TX)
+    input avr_rx_busy,       // AVR RX buffer full
+    
+    input p1left,
+    input p1opp,
+    input p1right,
+    input p2left,
+    input p2opp,
+    input p2right,
+    input p3left,
+    input p3opp,
+    input p3right,
+    input p4left,
+    input p4opp,
+    input p4right,
+    
+    input startSignal,
+    output startLED,
+    output tickingLED,
+    
+    output p1led,
+    output p2led,
+    output p3led,
+    output p4led,
+    
+    output io_seg_p1[7],
+    output io_sel_p1[2],
+    output io_seg_p2[7],
+    output io_sel_p2[2],
+    output io_seg_p3[7],
+    output io_sel_p3[2],
+    output io_seg_p4[7],
+    output io_sel_p4[2]
+    
+  ) {
+  
+  sig rst;                  // reset signal
+  
+  .clk(clk) {
+    // The reset conditioner is used to synchronize the reset signal to the FPGA
+    // clock. This ensures the entire FPGA comes out of reset at the same time.
+    reset_conditioner reset_cond;  
+    .rst(rst) {
+      game_states states;
+      multi_seven_seg seg1;
+      multi_seven_seg seg2;
+      multi_seven_seg seg3;
+      multi_seven_seg seg4;
+    }
+  }
+  
+  bin_to_dec my_bin_to_dec_P1 (#DIGITS(2));
+  bin_to_dec my_bin_to_dec_P2 (#DIGITS(2));
+  bin_to_dec my_bin_to_dec_P3 (#DIGITS(2));
+  bin_to_dec my_bin_to_dec_P4 (#DIGITS(2));
+  
+  always {
+    reset_cond.in = ~rst_n; // input raw inverted reset signal
+    rst = reset_cond.out;   // conditioned reset
+    
+    led = 8h00;             // turn LEDs off
+    spi_miso = bz;          // not using SPI
+    spi_channel = bzzzz;    // not using flags
+    avr_rx = bz;            // not using serial port
+    
+    states.p1left = ~p1left; // make button active high
+    states.p2left = ~p2left; // make button active high
+    states.p3left = ~p3left; // make button active high
+    states.p4left = ~p4left; // make button active high
+    
+    states.p1opp = ~p1opp; // make button active high
+    states.p2opp = ~p2opp; // make button active high
+    states.p3opp = ~p3opp; // make button active high
+    states.p4opp = ~p4opp; // make button active high
+    
+    states.p1right = ~p1right; // make button active high
+    states.p2right = ~p2right; // make button active high
+    states.p3right = ~p3right; // make button active high
+    states.p4right = ~p4right; // make button active high
+    
+    p1led = states.p1led;
+    p2led = states.p2led;
+    p3led = states.p3led;
+    p4led = states.p4led;
+    
+    led[0] = states.draw;
+    led[1] = states.ticking;
+    led[2] = 0;
+    led[3] = states.p1led;
+    led[4] = states.p2led;
+    led[5] = states.p3led;
+    led[6] = states.p4led;
+    led[7] = states.rise;
+    
+    my_bin_to_dec_P1.value = states.scoreP1;
+    seg1.values = my_bin_to_dec_P1.digits;
+    io_sel_p1 = seg1.sel;
+    io_seg_p1 = seg1.custom_seg;
+    
+    my_bin_to_dec_P2.value = states.scoreP2;
+    seg2.values = my_bin_to_dec_P2.digits;
+    io_sel_p2 = seg2.sel;
+    io_seg_p2 = seg2.custom_seg;
+    
+    my_bin_to_dec_P3.value = states.scoreP3;
+    seg3.values = my_bin_to_dec_P3.digits;
+    io_sel_p3 = seg3.sel;
+    io_seg_p3 = seg3.custom_seg;
+    
+    my_bin_to_dec_P4.value = states.scoreP4;
+    seg4.values = my_bin_to_dec_P4.digits;
+    io_sel_p4 = seg4.sel;
+    io_seg_p4 = seg4.custom_seg;
+    
+    states.startPress = startSignal;
+    startLED = states.startLED;
+    tickingLED = states.ticking;
+    
+    
+  }
+}

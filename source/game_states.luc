@@ -1,0 +1,424 @@
+module game_states (
+    input clk,
+    input rst,
+    input p1right,
+    input p2right,
+    input p3right,
+    input p4right,
+    input p1opp,
+    input p2opp,
+    input p3opp,
+    input p4opp,
+    input p1left,
+    input p2left,
+    input p3left,
+    input p4left,
+    input startPress,
+    
+    output startLED,
+    output count[8],
+    output p1led,
+    output p2led,
+    output p3led,
+    output p4led,
+    output rise,
+    output scoreP1[5],
+    output scoreP2[5],
+    output scoreP3[5],
+    output scoreP4[5],
+    
+    output draw[1],
+    output ticking,
+    output boom
+  ) {
+  
+  .clk(clk) {
+    button_conditioner button_conditioner_start;
+    edge_detector edge_detector_start(#RISE(1),#FALL(0));
+    custom_counter counter(#TOP(30),#DIV(26),#UP(0),#SIZE(5));
+    get_winner my_get_winner;
+    .rst(rst) {
+      player p1;
+      player p2;
+      player p3;
+      player p4;
+      blink myBlink;
+      fsm states(#INIT(IDLE)) = {IDLE,P1,P2,P3,P4,P1BOOM,P2BOOM,P3BOOM,P4BOOM,P1WIN,P2WIN,P3WIN,P4WIN,DRAW,TEST};
+      dff score_p1[5](#INIT(0));
+      dff score_p2[5](#INIT(0));
+      dff score_p3[5](#INIT(0));
+      dff score_p4[5](#INIT(0));
+      dff hold_p1[5](#INIT(0));
+      dff hold_p2[5](#INIT(0));
+      dff hold_p3[5](#INIT(0));
+      dff hold_p4[5](#INIT(0));
+      dff aluMux[26];
+      dff loser[2];
+    }
+  }
+  always {
+    count = counter.value; // maybe don't need anymore
+    rise = counter.out;
+    draw = 0;
+    
+    p1.left = p1left;
+    p1.opp = p1opp;
+    p1.right = p1right;
+    p2.left = p2left;
+    p2.opp = p2opp;
+    p2.right = p2right;
+    p3.left = p3left;
+    p3.opp = p3opp;
+    p3.right = p3right;
+    p4.left = p4left;
+    p4.opp = p4opp;
+    p4.right = p4right;
+    
+    p1led = 0;
+    p2led = 0;
+    p3led = 0;
+    p4led = 0;
+    
+    scoreP1 = score_p1.q;
+    scoreP2 = score_p2.q;
+    scoreP3 = score_p3.q;
+    scoreP4 = score_p4.q;
+    
+    my_get_winner.score_1 = h0;
+    my_get_winner.score_2 = h0;
+    my_get_winner.score_3 = h0;
+    my_get_winner.aluMuxIn = 3b000;
+    
+    ticking = 0;
+    boom = 0;
+    startLED = 0;
+    button_conditioner_start.in = startPress;
+    edge_detector_start.in = button_conditioner_start.out;
+    counter.rst = 0;
+    my_get_winner.rst = 0;
+    
+    case (states.q) {
+      states.IDLE:
+        states.d = states.IDLE;
+        my_get_winner.rst = 1;
+        counter.rst = 1;
+        startLED = 1;
+        score_p1.d = 0;
+        score_p2.d = 0;
+        score_p3.d = 0;
+        score_p4.d = 0;
+        hold_p1.d = 0;
+        hold_p2.d = 0;
+        hold_p3.d = 0;
+        hold_p4.d = 0;
+        aluMux.d = 0;
+        loser.d = 0;
+        if (edge_detector_start.out == 1) {
+          states.d = states.P1;
+        }
+      states.P1:
+        if (counter.value == 0) {
+          states.d = states.P1BOOM;
+        }
+        if (hold_p1.q >= b011) {
+          states.d = states.P1BOOM;
+        }
+        if (counter.firstOut == 26x{1}) {
+          score_p1.d = score_p1.q + 1;
+          hold_p1.d = hold_p1.q + 1;
+        }
+        if (counter.value < d5) { ticking = myBlink.blink[0];
+        } else if (counter.value < d15) { ticking = myBlink.blink[1];
+        } else { ticking = myBlink.blink[2];
+        }
+        hold_p2.d = 0;
+        hold_p4.d = 0;
+        hold_p3.d = 0;
+        
+        p1led = 1;
+        p2led = 0;
+        p3led = 0;
+        p4led = 0;
+        if (p1.buttonPress == 3b001) {
+          states.d = states.P2;
+        }
+        if (p1.buttonPress == 3b010) {
+          states.d = states.P3;
+        }
+        if (p1.buttonPress == 3b100) {
+          states.d = states.P4;
+        }
+      
+      states.P2:
+        if (counter.value < d5) { ticking = myBlink.blink[0];
+        } else if (counter.value < d15) { ticking = myBlink.blink[1];
+        } else { ticking = myBlink.blink[2];
+        }
+        if (counter.value == 0) {
+          states.d = states.P2BOOM;
+        }
+        if (hold_p2.q >= b011) {
+          states.d = states.P2BOOM;
+        }
+        if (counter.firstOut == 26x{1}) {
+          score_p2.d = score_p2.q + 1;
+          hold_p2.d = hold_p2.q + 1;
+        }
+        hold_p1.d = 0;
+        hold_p3.d = 0;
+        hold_p4.d = 0;
+        
+        p1led = 0;
+        p2led = 1;
+        p3led = 0;
+        p4led = 0;
+        if (p2.buttonPress == 3b001) {
+          states.d = states.P3;
+        }
+        if (p2.buttonPress == 3b010) {
+          states.d = states.P4;
+        }
+        if (p2.buttonPress == 3b100) {
+          states.d = states.P1;
+        }
+      
+      states.P3:
+        if (counter.value < d5) { ticking = myBlink.blink[0];
+        } else if (counter.value < d15) { ticking = myBlink.blink[1];
+        } else { ticking = myBlink.blink[2];
+        }
+        if (counter.value == 0) {
+          states.d = states.P3BOOM;
+        }
+        if (hold_p3.q >= b011) {
+          states.d = states.P3BOOM;
+        }
+        if (counter.firstOut == 26x{1}) {
+          score_p3.d = score_p3.q + 1;
+          hold_p3.d = hold_p3.q + 1;
+        }
+        hold_p1.d = 0;
+        hold_p2.d = 0;
+        hold_p4.d = 0;
+        
+        p1led = 0;
+        p2led = 0;
+        p3led = 1;
+        p4led = 0;
+        if (p3.buttonPress == 3b001) {
+          states.d = states.P4;
+        }
+        if (p3.buttonPress == 3b010) {
+          states.d = states.P1;
+        }
+        if (p3.buttonPress == 3b100) {
+          states.d = states.P2;
+        }
+      
+      states.P4:
+        if (counter.value < d5) { ticking = myBlink.blink[0];
+        } else if (counter.value < d15) { ticking = myBlink.blink[1];
+        } else { ticking = myBlink.blink[2];
+        }
+        if (counter.value == 0) {
+          states.d = states.P4BOOM;
+        }
+        if (hold_p4.q >= b011) {
+          states.d = states.P4BOOM;
+        }
+        if (counter.firstOut == 26x{1}) {
+          score_p4.d = score_p4.q + 1;
+          hold_p4.d = hold_p4.q + 1;
+        }
+        hold_p1.d = 0;
+        hold_p2.d = 0;
+        hold_p3.d = 0;
+        
+        p1led = 0;
+        p2led = 0;
+        p3led = 0;
+        p4led = 1;
+        if (p4.buttonPress == 3b001) {
+          states.d = states.P1;
+        }
+        if (p4.buttonPress == 3b010) {
+          states.d = states.P2;
+        }
+        if (p4.buttonPress == 3b100) {
+          states.d = states.P3;
+        }
+      
+      states.P1BOOM:
+        states.d = states.P1BOOM;
+        boom = 1;
+        loser.d = b00;
+        p1led = 1;
+        p2led = 0;
+        p3led = 0;
+        p4led = 0;
+        aluMux.d = aluMux.q + 1;
+        my_get_winner.score_1 = score_p2.q;
+        my_get_winner.score_2 = score_p3.q;
+        my_get_winner.score_3 = score_p4.q;
+        my_get_winner.aluMuxIn = aluMux.q[25-:3];
+        if (my_get_winner.draw == 1) {states.d = states.DRAW;}
+        if (my_get_winner.foundWinner == 1) {
+          case(my_get_winner.winnerIs){
+            b01:
+              states.d = states.P2WIN;
+            b10:
+              states.d = states.P3WIN;
+            b11:
+              states.d = states.P4WIN;
+          }
+        }
+      
+      states.P2BOOM:
+        states.d = states.P2BOOM;
+        boom = 1;
+        loser.d = b01;
+        p1led = 0;
+        p2led = 1;
+        p3led = 0;
+        p4led = 0;
+        aluMux.d = aluMux.q + 1;
+        my_get_winner.score_1 = score_p3.q;
+        my_get_winner.score_2 = score_p4.q;
+        my_get_winner.score_3 = score_p1.q;
+        my_get_winner.aluMuxIn = aluMux.q[25-:3];
+        if (my_get_winner.draw == 1) {states.d = states.DRAW;}
+        if (my_get_winner.foundWinner == 1) {
+          case(my_get_winner.winnerIs){
+            b01:
+              states.d = states.P3WIN;
+            b10:
+              states.d = states.P4WIN;
+            b11:
+              states.d = states.P1WIN;
+          }
+        }
+      
+      states.P3BOOM:
+        states.d = states.P3BOOM;
+        boom = 1;
+        loser.d = b10;
+        p1led = 0;
+        p2led = 0;
+        p3led = 1;
+        p4led = 0;
+        aluMux.d = aluMux.q + 1;
+        my_get_winner.score_1 = score_p4.q;
+        my_get_winner.score_2 = score_p1.q;
+        my_get_winner.score_3 = score_p2.q;
+        my_get_winner.aluMuxIn = aluMux.q[25-:3];
+        if (my_get_winner.draw == 1) {states.d = states.DRAW;}
+        if (my_get_winner.foundWinner == 1) {
+          case(my_get_winner.winnerIs){
+            b01:
+              states.d = states.P4WIN;
+            b10:
+              states.d = states.P1WIN;
+            b11:
+              states.d = states.P2WIN;
+          }
+        }
+      
+      states.P4BOOM:
+        states.d = states.P4BOOM;
+        boom = 1;
+        loser.d = b11;
+        p1led = 0;
+        p2led = 0;
+        p3led = 0;
+        p4led = 1;
+        aluMux.d = aluMux.q + 1;
+        my_get_winner.score_1 = score_p1.q;
+        my_get_winner.score_2 = score_p2.q;
+        my_get_winner.score_3 = score_p3.q;
+        my_get_winner.aluMuxIn = aluMux.q[25-:3];
+        if (my_get_winner.draw == 1) {states.d = states.DRAW;}
+        if (my_get_winner.foundWinner == 1) {
+          case(my_get_winner.winnerIs){
+            b01:
+              states.d = states.P1WIN;
+            b10:
+              states.d = states.P2WIN;
+            b11:
+              states.d = states.P3WIN;
+          }
+        }
+      
+      states.P1WIN:
+        states.d = states.P1WIN;
+        p1led = 1;
+        case(loser.q){
+          //00:
+          //p1led = 1;
+          b01:
+            p2led = myBlink.blink[0];
+          b10:
+            p3led = myBlink.blink[0];
+          b11:
+            p4led = myBlink.blink[0];
+        }
+      if (edge_detector_start.out == 1) {
+       states.d = states.IDLE;
+       }
+      states.P2WIN:
+        states.d = states.P2WIN;
+        p2led = 1;
+        case(loser.q){
+          b00:
+            p1led = myBlink.blink[0];
+          //01:
+          //p2led = 1;
+          b10:
+            p3led = myBlink.blink[0];
+          b11:
+            p4led = myBlink.blink[0];
+        }
+      if (edge_detector_start.out == 1) {
+      states.d = states.IDLE;
+      }
+      states.P3WIN:
+        states.d = states.P3WIN;
+        p3led = 1;
+        case(loser.q){
+          b00:
+            p1led = myBlink.blink[0];
+          b01:
+            p2led = myBlink.blink[0];
+          //10:
+          //p3led = 1;
+          b11:
+            p4led = myBlink.blink[0];
+        }
+      if (edge_detector_start.out == 1) {
+      states.d = states.IDLE;
+      }
+      states.P4WIN:
+        states.d = states.P4WIN;
+        p4led = 1;
+        case(loser.q){
+          b00:
+            p1led = myBlink.blink[0];
+          b01:
+            p2led = myBlink.blink[0];
+          b10:
+            p3led = myBlink.blink[0];
+          //11:
+          //p4led = 1;
+        }
+      if (edge_detector_start.out == 1) {
+      states.d = states.IDLE;
+      }
+      states.DRAW:
+        draw = 1;
+        states.d = states.DRAW;
+        startLED = myBlink.blink[1];
+      if (edge_detector_start.out == 1) {
+      states.d = states.IDLE;
+      }        
+    }
+  }
+}

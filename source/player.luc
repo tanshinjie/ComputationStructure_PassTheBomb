@@ -1,0 +1,53 @@
+module player (
+    input clk,  // clock
+    input rst,  // reset
+    input left,
+    input opp,
+    input right,
+    //input holdIn,
+    //input scoreIn,
+    output buttonPress[3]
+    //output hold,
+    //output score
+  ) {
+  
+  .clk(clk) {
+    edge_detector edge_detector_left(#RISE(1),#FALL(0));
+    edge_detector edge_detector_opp(#RISE(1),#FALL(0));
+    edge_detector edge_detector_right(#RISE(1),#FALL(0));
+    button_conditioner button_conditioner_left;
+    button_conditioner button_conditioner_opp;
+    button_conditioner button_conditioner_right;
+    .rst(rst) {
+      //dff scoreCount;
+      //dff holdCount;
+    }
+  }
+  
+  always {
+    button_conditioner_left.in = left;
+    button_conditioner_opp.in = opp;
+    button_conditioner_right.in = right;
+    edge_detector_left.in = button_conditioner_left.out;
+    edge_detector_opp.in = button_conditioner_opp.out;
+    edge_detector_right.in = button_conditioner_right.out;
+    //hold = holdCount.q;
+    //score = scoreCount.q;
+    //if (holdIn == 1) {
+    //  holdCount.d = holdCount.q + 1;
+    //}
+    //if (scoreIn == 1) {
+    //  scoreCount.d = scoreCount.q + 1;
+    //}
+    buttonPress = b000;
+    if (edge_detector_left.out == 1) {
+      buttonPress = b100;
+    }
+    if (edge_detector_opp.out == 1) {
+      buttonPress = b010;
+    }
+    if (edge_detector_right.out == 1) {
+      buttonPress = b001;
+    }
+  }
+}
