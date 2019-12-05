@@ -33,7 +33,8 @@ module game_states_2 (
     output reg [4:0] scoreP4,
     output reg [0:0] draw,
     output reg ticking,
-    output reg boom
+    output reg boom,
+    output reg testOut
   );
   
   
@@ -136,6 +137,20 @@ module game_states_2 (
     .rst(rst),
     .blink(M_myBlink_blink)
   );
+  wire [1-1:0] M_my_uart_tx_tx;
+  wire [1-1:0] M_my_uart_tx_busy;
+  reg [1-1:0] M_my_uart_tx_block;
+  reg [8-1:0] M_my_uart_tx_data;
+  reg [1-1:0] M_my_uart_tx_new_data;
+  uart_tx_20 my_uart_tx (
+    .clk(clk),
+    .rst(rst),
+    .block(M_my_uart_tx_block),
+    .data(M_my_uart_tx_data),
+    .new_data(M_my_uart_tx_new_data),
+    .tx(M_my_uart_tx_tx),
+    .busy(M_my_uart_tx_busy)
+  );
   localparam IDLE_states = 4'd0;
   localparam P1_states = 4'd1;
   localparam P2_states = 4'd2;
@@ -163,6 +178,7 @@ module game_states_2 (
   reg [4:0] M_hold_p4_d, M_hold_p4_q = 1'h0;
   reg [25:0] M_aluMux_d, M_aluMux_q = 1'h0;
   reg [1:0] M_loser_d, M_loser_q = 1'h0;
+  reg [0:0] M_test_d, M_test_q = 1'h0;
   
   always @* begin
     M_states_d = M_states_q;
@@ -172,6 +188,7 @@ module game_states_2 (
     M_score_p4_d = M_score_p4_q;
     M_loser_d = M_loser_q;
     M_hold_p1_d = M_hold_p1_q;
+    M_test_d = M_test_q;
     M_hold_p4_d = M_hold_p4_q;
     M_aluMux_d = M_aluMux_q;
     M_score_p2_d = M_score_p2_q;
@@ -211,6 +228,15 @@ module game_states_2 (
     M_edge_detector_start_in = M_button_conditioner_start_out;
     M_counter_rst = 1'h0;
     M_my_get_winner_rst = 1'h0;
+    M_my_uart_tx_block = 1'h0;
+    M_my_uart_tx_new_data = 1'h0;
+    M_my_uart_tx_data = 1'h0;
+    testOut = M_test_q;
+    if (M_edge_detector_start_out == 1'h1) begin
+      M_test_d = M_test_q + 1'h1;
+      M_my_uart_tx_new_data = 1'h1;
+      M_my_uart_tx_data = 7'h61;
+    end
     
     case (M_states_q)
       IDLE_states: begin
@@ -584,9 +610,19 @@ module game_states_2 (
         draw = 1'h1;
         M_states_d = DRAW_states;
         startLED = M_myBlink_blink[1+0-:1];
+        p1led = M_myBlink_blink[1+0-:1];
+        p2led = M_myBlink_blink[1+0-:1];
+        p3led = M_myBlink_blink[1+0-:1];
+        p4led = M_myBlink_blink[1+0-:1];
         if (M_edge_detector_start_out == 1'h1) begin
           M_states_d = IDLE_states;
         end
+      end
+      TEST_states: begin
+        M_score_p1_d = M_counter_value;
+        M_score_p2_d = M_counter_value;
+        M_score_p3_d = M_counter_value;
+        M_score_p4_d = M_counter_value;
       end
     endcase
   end
@@ -603,6 +639,7 @@ module game_states_2 (
       M_hold_p4_q <= 1'h0;
       M_aluMux_q <= 1'h0;
       M_loser_q <= 1'h0;
+      M_test_q <= 1'h0;
       M_states_q <= 1'h0;
     end else begin
       M_score_p1_q <= M_score_p1_d;
@@ -615,6 +652,7 @@ module game_states_2 (
       M_hold_p4_q <= M_hold_p4_d;
       M_aluMux_q <= M_aluMux_d;
       M_loser_q <= M_loser_d;
+      M_test_q <= M_test_d;
       M_states_q <= M_states_d;
     end
   end

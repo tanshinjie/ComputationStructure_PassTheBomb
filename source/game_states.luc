@@ -30,6 +30,7 @@ module game_states (
     output draw[1],
     output ticking,
     output boom
+    
   ) {
   
   .clk(clk) {
@@ -56,7 +57,7 @@ module game_states (
       dff loser[2];
     }
   }
-  always {
+  always {   
     count = counter.value; // maybe don't need anymore
     rise = counter.out;
     draw = 0;
@@ -361,9 +362,9 @@ module game_states (
           b11:
             p4led = myBlink.blink[0];
         }
-      if (edge_detector_start.out == 1) {
-       states.d = states.IDLE;
-       }
+        if (edge_detector_start.out == 1) {
+          states.d = states.IDLE;
+        }
       states.P2WIN:
         states.d = states.P2WIN;
         p2led = 1;
@@ -377,9 +378,9 @@ module game_states (
           b11:
             p4led = myBlink.blink[0];
         }
-      if (edge_detector_start.out == 1) {
-      states.d = states.IDLE;
-      }
+        if (edge_detector_start.out == 1) {
+          states.d = states.IDLE;
+        }
       states.P3WIN:
         states.d = states.P3WIN;
         p3led = 1;
@@ -393,9 +394,9 @@ module game_states (
           b11:
             p4led = myBlink.blink[0];
         }
-      if (edge_detector_start.out == 1) {
-      states.d = states.IDLE;
-      }
+        if (edge_detector_start.out == 1) {
+          states.d = states.IDLE;
+        }
       states.P4WIN:
         states.d = states.P4WIN;
         p4led = 1;
@@ -409,16 +410,25 @@ module game_states (
           //11:
           //p4led = 1;
         }
-      if (edge_detector_start.out == 1) {
-      states.d = states.IDLE;
-      }
+        if (edge_detector_start.out == 1) {
+          states.d = states.IDLE;
+        }
       states.DRAW:
         draw = 1;
         states.d = states.DRAW;
         startLED = myBlink.blink[1];
-      if (edge_detector_start.out == 1) {
-      states.d = states.IDLE;
-      }        
+        p1led = myBlink.blink[1];
+        p2led = myBlink.blink[1];
+        p3led = myBlink.blink[1];
+        p4led = myBlink.blink[1];
+        if (edge_detector_start.out == 1) {
+          states.d = states.IDLE;
+        }
+      states.TEST:
+        score_p1.d = counter.value;
+        score_p2.d = counter.value;
+        score_p3.d = counter.value;
+        score_p4.d = counter.value;
     }
   }
 }

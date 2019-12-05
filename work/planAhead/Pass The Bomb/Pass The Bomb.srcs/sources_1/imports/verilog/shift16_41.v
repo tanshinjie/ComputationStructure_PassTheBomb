@@ -4,7 +4,7 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module bool16_41 (
+module shift16_41 (
     input [15:0] a,
     input [15:0] b,
     input [5:0] alufn,
@@ -15,30 +15,18 @@ module bool16_41 (
   
   always @* begin
     
-    case (alufn[0+3-:4])
+    case (alufn[0+1-:2])
       default: begin
         op = 1'h0;
       end
-      4'h0: begin
-        op = 1'h0;
+      2'h0: begin
+        op = a <<< b[0+3-:4];
       end
-      4'h6: begin
-        op = a ^ b;
+      2'h1: begin
+        op = a >>> b[0+3-:4];
       end
-      4'h8: begin
-        op = a & b;
-      end
-      4'h9: begin
-        op = a ~^ b;
-      end
-      4'ha: begin
-        op = a;
-      end
-      4'hc: begin
-        op = b;
-      end
-      4'he: begin
-        op = a | b;
+      2'h3: begin
+        op = $signed(a) >>> b[0+3-:4];
       end
     endcase
   end

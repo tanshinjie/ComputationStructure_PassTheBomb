@@ -71,6 +71,7 @@ module mojo_top_0 (
   wire [1-1:0] M_states_draw;
   wire [1-1:0] M_states_ticking;
   wire [1-1:0] M_states_boom;
+  wire [1-1:0] M_states_testOut;
   reg [1-1:0] M_states_p1right;
   reg [1-1:0] M_states_p2right;
   reg [1-1:0] M_states_p3right;
@@ -113,7 +114,8 @@ module mojo_top_0 (
     .scoreP4(M_states_scoreP4),
     .draw(M_states_draw),
     .ticking(M_states_ticking),
-    .boom(M_states_boom)
+    .boom(M_states_boom),
+    .testOut(M_states_testOut)
   );
   wire [7-1:0] M_seg1_seg;
   wire [2-1:0] M_seg1_sel;
@@ -242,5 +244,6 @@ module mojo_top_0 (
     M_states_startPress = startSignal;
     startLED = M_states_startLED;
     tickingLED = M_states_ticking;
+    led[2+0-:1] = M_states_testOut;
   end
 endmodule

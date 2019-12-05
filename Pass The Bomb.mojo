@@ -12,8 +12,8 @@
     <src>seven_seg.luc</src>
     <src>get_winner.luc</src>
     <src>compare16.luc</src>
-    <src>shift16.luc</src>
     <src>blink.luc</src>
+    <src>shift16.luc</src>
     <src>custom_counter.luc</src>
     <ucf>custom_io.ucf</ucf>
     <ucf lib="true">mojo.ucf</ucf>
@@ -21,6 +21,7 @@
     <component>bin_to_dec.luc</component>
     <component>reset_conditioner.luc</component>
     <component>pipeline.luc</component>
+    <component>uart_tx.luc</component>
     <component>button_conditioner.luc</component>
     <component>counter.luc</component>
     <component>edge_detector.luc</component>

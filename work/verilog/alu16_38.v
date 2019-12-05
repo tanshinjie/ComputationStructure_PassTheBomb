@@ -4,7 +4,7 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module alu16_37 (
+module alu16_38 (
     input [15:0] a,
     input [15:0] b,
     input [5:0] alufn,
@@ -25,7 +25,7 @@ module alu16_37 (
   reg [16-1:0] M_add_b;
   reg [6-1:0] M_add_alufn;
   reg [16-1:0] M_add_carryOut;
-  adder16_38 add (
+  adder16_39 add (
     .a(M_add_a),
     .b(M_add_b),
     .alufn(M_add_alufn),
@@ -43,7 +43,7 @@ module alu16_37 (
   reg [1-1:0] M_cmp_z;
   reg [1-1:0] M_cmp_v;
   reg [1-1:0] M_cmp_n;
-  compare16_39 cmp (
+  compare16_40 cmp (
     .alufn(M_cmp_alufn),
     .a(M_cmp_a),
     .b(M_cmp_b),
@@ -57,7 +57,7 @@ module alu16_37 (
   reg [16-1:0] M_shift_a;
   reg [16-1:0] M_shift_b;
   reg [6-1:0] M_shift_alufn;
-  shift16_40 shift (
+  shift16_41 shift (
     .a(M_shift_a),
     .b(M_shift_b),
     .alufn(M_shift_alufn),
@@ -68,7 +68,7 @@ module alu16_37 (
   reg [16-1:0] M_bool_a;
   reg [16-1:0] M_bool_b;
   reg [6-1:0] M_bool_alufn;
-  bool16_41 bool (
+  bool16_42 bool (
     .a(M_bool_a),
     .b(M_bool_b),
     .alufn(M_bool_alufn),

@@ -4,7 +4,7 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module seven_seg_22 (
+module custom_seven_seg_22 (
     input [3:0] char,
     output reg [6:0] segs
   );
@@ -18,16 +18,16 @@ module seven_seg_22 (
         segs = 7'h3f;
       end
       1'h1: begin
-        segs = 7'h06;
+        segs = 7'h0a;
       end
       2'h2: begin
-        segs = 7'h5b;
+        segs = 7'h73;
       end
       2'h3: begin
-        segs = 7'h4f;
+        segs = 7'h6b;
       end
       3'h4: begin
-        segs = 7'h66;
+        segs = 7'h4e;
       end
       3'h5: begin
         segs = 7'h6d;
@@ -36,13 +36,13 @@ module seven_seg_22 (
         segs = 7'h7d;
       end
       3'h7: begin
-        segs = 7'h07;
+        segs = 7'h0f;
       end
       4'h8: begin
         segs = 7'h7f;
       end
       4'h9: begin
-        segs = 7'h67;
+        segs = 7'h4f;
       end
       default: begin
         segs = 7'h00;

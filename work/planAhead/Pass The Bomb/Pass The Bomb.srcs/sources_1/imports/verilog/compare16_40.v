@@ -4,29 +4,33 @@
    This is a temporary file and any changes made to it will be destroyed.
 */
 
-module shift16_40 (
+module compare16_40 (
+    input [5:0] alufn,
     input [15:0] a,
     input [15:0] b,
-    input [5:0] alufn,
+    input z,
+    input v,
+    input n,
     output reg [15:0] op
   );
   
   
   
   always @* begin
+    op[1+14-:15] = 1'h0;
     
-    case (alufn[0+1-:2])
+    case (alufn[0+2-:3])
+      3'h3: begin
+        op[0+0-:1] = a == b;
+      end
+      3'h5: begin
+        op[0+0-:1] = v ^ n;
+      end
+      3'h7: begin
+        op[0+0-:1] = a <= b;
+      end
       default: begin
-        op = 1'h0;
-      end
-      2'h0: begin
-        op = a <<< b[0+3-:4];
-      end
-      2'h1: begin
-        op = a >>> b[0+3-:4];
-      end
-      2'h3: begin
-        op = $signed(a) >>> b[0+3-:4];
+        op[0+0-:1] = 1'h0;
       end
     endcase
   end

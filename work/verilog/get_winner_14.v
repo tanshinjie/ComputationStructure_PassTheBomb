@@ -34,7 +34,7 @@ module get_winner_14 (
   reg [16-1:0] M_myALU_a;
   reg [16-1:0] M_myALU_b;
   reg [6-1:0] M_myALU_alufn;
-  alu16_37 myALU (
+  alu16_38 myALU (
     .a(M_myALU_a),
     .b(M_myALU_b),
     .alufn(M_myALU_alufn),

@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.20131013 on Tue Dec 03 01:18:19 2019
+// Written by: Map P.20131013 on Thu Dec 05 12:08:54 2019
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -404,62 +404,65 @@ TIMEGRP clk = BEL "states/M_score_p2_q_0" BEL "states/M_score_p2_q_1" BEL
         "states/my_get_winner/M_highest_q_1" BEL
         "states/my_get_winner/M_highest_q_0" BEL
         "states/my_get_winner/M_winnerCode_q_1" BEL
-        "states/my_get_winner/M_winnerCode_q_0" BEL "states/M_score_p1_q_0"
-        BEL "states/M_score_p1_q_1" BEL "states/M_score_p1_q_2" BEL
-        "states/M_score_p1_q_3" BEL "states/M_score_p1_q_4" BEL
-        "states/M_states_q_FSM_FFd1_1" BEL "states/M_states_q_FSM_FFd1_2" BEL
-        "states/M_hold_p1_q_0" BEL "states/M_hold_p1_q_1" BEL
-        "states/M_states_q_FSM_FFd2_1" BEL "states/M_states_q_FSM_FFd2_2" BEL
-        "states/M_states_q_FSM_FFd3_1" BEL "states/M_states_q_FSM_FFd3_2" BEL
+        "states/my_get_winner/M_winnerCode_q_0" BEL
+        "states/my_get_winner/M_states_q_FSM_FFd1_1" BEL
+        "states/my_get_winner/M_states_q_FSM_FFd2_1" BEL
+        "states/M_score_p1_q_0" BEL "states/M_score_p1_q_1" BEL
+        "states/M_score_p1_q_2" BEL "states/M_score_p1_q_3" BEL
+        "states/M_score_p1_q_4" BEL "states/M_states_q_FSM_FFd1_1" BEL
+        "states/M_states_q_FSM_FFd1_2" BEL "states/M_hold_p1_q_0" BEL
+        "states/M_hold_p1_q_1" BEL "states/M_states_q_FSM_FFd2_1" BEL
+        "states/M_states_q_FSM_FFd2_2" BEL "states/M_states_q_FSM_FFd3_1" BEL
+        "states/M_states_q_FSM_FFd3_2" BEL
         "states/edge_detector_start/M_last_q" BEL "states/M_score_p3_q_0" BEL
-        "states/M_score_p3_q_1" BEL "states/M_score_p3_q_2" BEL
-        "states/M_states_q_FSM_FFd4_1" BEL "states/M_score_p3_q_3" BEL
-        "states/M_states_q_FSM_FFd4_2" BEL "states/M_score_p3_q_4" BEL
-        "states/M_hold_p3_q_0" BEL "states/M_hold_p3_q_1" BEL
-        "states/M_aluMux_q_0" BEL "states/M_aluMux_q_1" BEL
-        "states/M_aluMux_q_2" BEL "states/M_aluMux_q_3" BEL
-        "states/M_aluMux_q_4" BEL "states/M_aluMux_q_5" BEL
-        "states/M_aluMux_q_6" BEL "states/M_aluMux_q_7" BEL
-        "states/M_aluMux_q_8" BEL "states/M_aluMux_q_9" BEL
-        "states/counter/M_rise_q_25" BEL "states/counter/M_rise_q_24" BEL
-        "states/counter/M_rise_q_23" BEL "states/counter/M_rise_q_22" BEL
-        "states/counter/M_rise_q_21" BEL "states/counter/M_rise_q_20" BEL
-        "states/counter/M_rise_q_19" BEL "states/counter/M_rise_q_18" BEL
-        "states/counter/M_rise_q_17" BEL "states/counter/M_rise_q_16" BEL
-        "states/counter/M_rise_q_15" BEL "states/counter/M_rise_q_14" BEL
-        "states/counter/M_rise_q_13" BEL "states/counter/M_rise_q_12" BEL
-        "states/counter/M_rise_q_11" BEL "states/counter/M_rise_q_10" BEL
-        "states/counter/M_rise_q_9" BEL "states/counter/M_rise_q_8" BEL
-        "states/counter/M_rise_q_7" BEL "states/counter/M_rise_q_6" BEL
-        "states/counter/M_rise_q_5" BEL "states/counter/M_rise_q_4" BEL
-        "states/counter/M_rise_q_3" BEL "states/counter/M_rise_q_2" BEL
-        "states/counter/M_rise_q_1" BEL "states/counter/M_rise_q_0" BEL
-        "states/counter/M_ctr_q_30" BEL "states/counter/M_ctr_q_29" BEL
-        "states/counter/M_ctr_q_28" BEL "states/counter/M_ctr_q_27" BEL
-        "states/counter/M_ctr_q_26" BEL "states/counter/M_ctr_q_25" BEL
-        "states/counter/M_ctr_q_24" BEL "states/counter/M_ctr_q_23" BEL
-        "states/counter/M_ctr_q_22" BEL "states/counter/M_ctr_q_21" BEL
-        "states/counter/M_ctr_q_20" BEL "states/counter/M_ctr_q_19" BEL
-        "states/counter/M_ctr_q_18" BEL "states/counter/M_ctr_q_17" BEL
-        "states/counter/M_ctr_q_16" BEL "states/counter/M_ctr_q_15" BEL
-        "states/counter/M_ctr_q_14" BEL "states/counter/M_ctr_q_13" BEL
-        "states/counter/M_ctr_q_12" BEL "states/counter/M_ctr_q_11" BEL
-        "states/counter/M_ctr_q_10" BEL "states/counter/M_ctr_q_9" BEL
-        "states/counter/M_ctr_q_8" BEL "states/counter/M_ctr_q_7" BEL
-        "states/counter/M_ctr_q_6" BEL "states/counter/M_ctr_q_5" BEL
-        "states/counter/M_ctr_q_4" BEL "states/counter/M_ctr_q_3" BEL
-        "states/counter/M_ctr_q_2" BEL "states/counter/M_ctr_q_1" BEL
-        "states/counter/M_ctr_q_0" BEL "clk_BUFGP/BUFG" BEL
-        "reset_cond/M_stage_q_3" BEL "reset_cond/M_stage_q_2" BEL
-        "reset_cond/M_stage_q_1" BEL "reset_cond/M_stage_q_0" BEL
-        "seg1/ctr/M_ctr_q_0" BEL "seg1/ctr/M_ctr_q_1" BEL "seg1/ctr/M_ctr_q_2"
-        BEL "seg1/ctr/M_ctr_q_3" BEL "seg1/ctr/M_ctr_q_4" BEL
-        "seg1/ctr/M_ctr_q_5" BEL "seg1/ctr/M_ctr_q_6" BEL "seg1/ctr/M_ctr_q_7"
-        BEL "seg1/ctr/M_ctr_q_8" BEL "seg1/ctr/M_ctr_q_9" BEL
-        "seg1/ctr/M_ctr_q_10" BEL "seg1/ctr/M_ctr_q_11" BEL
-        "seg1/ctr/M_ctr_q_12" BEL "seg1/ctr/M_ctr_q_13" BEL
-        "seg1/ctr/M_ctr_q_14" BEL "seg1/ctr/M_ctr_q_15" BEL
-        "seg1/ctr/M_ctr_q_16";
+        "states/M_score_p3_q_1" BEL "states/M_states_q_FSM_FFd4_1" BEL
+        "states/M_test_q_0" BEL "states/M_score_p3_q_2" BEL
+        "states/M_score_p3_q_3" BEL "states/M_states_q_FSM_FFd4_2" BEL
+        "states/M_score_p3_q_4" BEL "states/M_hold_p3_q_0" BEL
+        "states/M_hold_p3_q_1" BEL "states/M_aluMux_q_0" BEL
+        "states/M_aluMux_q_1" BEL "states/M_aluMux_q_2" BEL
+        "states/M_aluMux_q_3" BEL "states/M_aluMux_q_4" BEL
+        "states/M_aluMux_q_5" BEL "states/M_aluMux_q_6" BEL
+        "states/M_aluMux_q_7" BEL "states/M_aluMux_q_8" BEL
+        "states/M_aluMux_q_9" BEL "states/counter/M_rise_q_25" BEL
+        "states/counter/M_rise_q_24" BEL "states/counter/M_rise_q_23" BEL
+        "states/counter/M_rise_q_22" BEL "states/counter/M_rise_q_21" BEL
+        "states/counter/M_rise_q_20" BEL "states/counter/M_rise_q_19" BEL
+        "states/counter/M_rise_q_18" BEL "states/counter/M_rise_q_17" BEL
+        "states/counter/M_rise_q_16" BEL "states/counter/M_rise_q_15" BEL
+        "states/counter/M_rise_q_14" BEL "states/counter/M_rise_q_13" BEL
+        "states/counter/M_rise_q_12" BEL "states/counter/M_rise_q_11" BEL
+        "states/counter/M_rise_q_10" BEL "states/counter/M_rise_q_9" BEL
+        "states/counter/M_rise_q_8" BEL "states/counter/M_rise_q_7" BEL
+        "states/counter/M_rise_q_6" BEL "states/counter/M_rise_q_5" BEL
+        "states/counter/M_rise_q_4" BEL "states/counter/M_rise_q_3" BEL
+        "states/counter/M_rise_q_2" BEL "states/counter/M_rise_q_1" BEL
+        "states/counter/M_rise_q_0" BEL "states/counter/M_ctr_q_30" BEL
+        "states/counter/M_ctr_q_29" BEL "states/counter/M_ctr_q_28" BEL
+        "states/counter/M_ctr_q_27" BEL "states/counter/M_ctr_q_26" BEL
+        "states/counter/M_ctr_q_25" BEL "states/counter/M_ctr_q_24" BEL
+        "states/counter/M_ctr_q_23" BEL "states/counter/M_ctr_q_22" BEL
+        "states/counter/M_ctr_q_21" BEL "states/counter/M_ctr_q_20" BEL
+        "states/counter/M_ctr_q_19" BEL "states/counter/M_ctr_q_18" BEL
+        "states/counter/M_ctr_q_17" BEL "states/counter/M_ctr_q_16" BEL
+        "states/counter/M_ctr_q_15" BEL "states/counter/M_ctr_q_14" BEL
+        "states/counter/M_ctr_q_13" BEL "states/counter/M_ctr_q_12" BEL
+        "states/counter/M_ctr_q_11" BEL "states/counter/M_ctr_q_10" BEL
+        "states/counter/M_ctr_q_9" BEL "states/counter/M_ctr_q_8" BEL
+        "states/counter/M_ctr_q_7" BEL "states/counter/M_ctr_q_6" BEL
+        "states/counter/M_ctr_q_5" BEL "states/counter/M_ctr_q_4" BEL
+        "states/counter/M_ctr_q_3" BEL "states/counter/M_ctr_q_2" BEL
+        "states/counter/M_ctr_q_1" BEL "states/counter/M_ctr_q_0" BEL
+        "clk_BUFGP/BUFG" BEL "reset_cond/M_stage_q_3" BEL
+        "reset_cond/M_stage_q_2" BEL "reset_cond/M_stage_q_1" BEL
+        "reset_cond/M_stage_q_0" BEL "seg1/ctr/M_ctr_q_0" BEL
+        "seg1/ctr/M_ctr_q_1" BEL "seg1/ctr/M_ctr_q_2" BEL "seg1/ctr/M_ctr_q_3"
+        BEL "seg1/ctr/M_ctr_q_4" BEL "seg1/ctr/M_ctr_q_5" BEL
+        "seg1/ctr/M_ctr_q_6" BEL "seg1/ctr/M_ctr_q_7" BEL "seg1/ctr/M_ctr_q_8"
+        BEL "seg1/ctr/M_ctr_q_9" BEL "seg1/ctr/M_ctr_q_10" BEL
+        "seg1/ctr/M_ctr_q_11" BEL "seg1/ctr/M_ctr_q_12" BEL
+        "seg1/ctr/M_ctr_q_13" BEL "seg1/ctr/M_ctr_q_14" BEL
+        "seg1/ctr/M_ctr_q_15" BEL "seg1/ctr/M_ctr_q_16";
 TS_clk = PERIOD TIMEGRP "clk" 50 MHz HIGH 50%;
 SCHEMATIC END;
 
